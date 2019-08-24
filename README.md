@@ -10,7 +10,9 @@ You find the ROS code on The tf_object_detection_node.py file, it is responsible
 
 ## Running the first Node
 Once you have the node built you can run it with "rosrun tf_object_detection tf_object_detection_node.py".
-Running this node alone will only appear the camera window detecting the objects. Having this working means that this detected regions are ready to be sent to the motion node.
+Running this node alone will only appear the camera window detecting the objects. Having this working means that this detected regions are ready to be sent to the motion node. 
+## Camera 
+The Camera used in our work is just a normal usb camera that works with OpenCV. We just made sure it works with OpenCV because we want to use cv_Bridge in order to convert OpenCV images to ROS images. 
 ## Node Information
 Topics:
 
