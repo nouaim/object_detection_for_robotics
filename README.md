@@ -52,7 +52,7 @@ Because Moveit has a generic architecture that makes it able to control any Arm 
 
 ## Using the inference graph
 
-The inference graph used in this demonstration is taken from our trained model that we applied on some specific objects that we advice not to take in your model. Better to train it using your own data. We describe the process of data collection in the paper. 
+The inference graph used in this demonstration is taken from our trained model that we applied on some specific objects that we recommend not to use in your own model. Better to train using your own data. We describe the process of data collection, and training in the paper. 
 
 An easy way without training our same model, is to try one of the ZOO models like(SSD-mobilenet-COCO2018), it has been trained to detect 90 category classes, and can select some objects from them that you want to grasp. The problem with taking this model is that the detector doesn't detect the best grasping regions. The detected bounding rectangles in this case bound the whole object, so you want to do some little changes for the ROS code to make it successful with the grasping attempts. 
 
