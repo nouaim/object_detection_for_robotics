@@ -8,8 +8,9 @@ and the Tensorflow object detection API on this link https://github.com/tensorfl
 You find the ROS code on The tf_object_detection_node.py file, it is responsible for sending the detected regions of the objects to our robot that will use to execute grasps.
 
 
-## Running the Node
+## Running the first Node
 Once you have the node built you can run it with "rosrun tf_object_detection tf_object_detection_node.py".
+Running this node alone will only appear the camera window detecting the objects. Having this working means that this detected regions are ready to be sent to the motion node.
 ## Node Information
 Topics:
 
@@ -31,6 +32,11 @@ Parameters:
 * `/object_detection/path`: the path for models/research/object_detection directory. Default value = /home/ubuntu/git/models/research/object_detection
 * `/object_detection/confidence_level`: confidence level(class score), any object with a level below this will not be used. Default value = 0.7 (70%)
 
+## Running the Second Node (move_group_python_uarmswiftpro.py)
+
+Running this node allows to take the predicted regions with their category class from the first node to the uArm. This node works with Moveit messages. It basically has the functions necesseary to exectute the motion given a detected region on the objects. 
+
+## Using the inference graph
 
 The inference graph used in this demonstration is taken from our trained model that we applied on some specific objects that we advice not to take in your model. Better to train it using your own data. We describe the process of data collection in the paper. 
 
