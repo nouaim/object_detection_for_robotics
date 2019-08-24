@@ -21,7 +21,7 @@ Topics:
   Subscribes `std_msgs/Empty` Message to command object detection is carried out on the next image
 
 * `tf_object_detection_node/adjusted_image`:  
-  Publishes `sensor_msgs/Image` Adjusted image which may contain bouning boxes and the category classes of the detected objects
+  Publishes `sensor_msgs/Image` Adjusted image which may contain bounding boxes and the category classes of the detected objects
   
 * `tf_object_detection_node/result`:  
   Publishes `tf_object_detection/detection_results` Contains an array of strings of the detected object names
@@ -34,7 +34,19 @@ Parameters:
 
 ## Running the Second Node (move_group_python_uarmswiftpro.py)
 
-Running this node allows to take the predicted regions with their category class from the first node to the uArm. This node works with Moveit messages. It basically has the functions necesseary to exectute the motion given a detected region on the objects. 
+Running this node allows to take the predicted regions with their category class from the first node to the uArm. This node works with Moveit messages. It basically has the functions necessary to execute the motion given a detected region on the objects. 
+
+you can run it with "rosrun tf_object_detection move_group_python_uarmswiftpro.py".
+
+## Node Information 
+
+* '/move_group/display_planned_path'  is to create a `DisplayTrajectory`_ ROS publisher which is used to display
+trajectories.
+
+we will import the `moveit_commander`_ namespace. This namespace provides us with a `MoveGroupCommander`_ class, a `PlanningSceneInterface`_ class, and a `RobotCommander`_ class. 
+
+Because Moveit has a generic architecture that makes it able to control any Arm that was developed though it, We really recommend to refer to this Tutorial https://docs.ros.org/kinetic/api/moveit_tutorials/html/index.html in case there are any issues with this particular node. the link includes many tutorials developed on both Python, and C++ that makes you able to choose your best language from them while working with moveit.
+
 
 ## Using the inference graph
 
