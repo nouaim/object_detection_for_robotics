@@ -1,13 +1,11 @@
-# uArmswfitpro-objectdetection
-
 # ROScode
-You find here the code associacted to our research "Multi-object detection for robotic grasping based on Convolutional NeuralNetworks". 
+You find here the code associated with our research "Multi-object detection for robotic grasping based on Convolutional Neural Networks". 
 
-This code works with the uarm swift pro ROS package on this link https://github.com/uArm-Developer/RosForSwiftAndSwiftPro
+This code works with the uArm swift pro ROS package on this link https://github.com/uArm-Developer/RosForSwiftAndSwiftPro
 
-and the Tensorflow object detection detection API on this link https://github.com/tensorflow/models/tree/master/research/object_detection
+and the Tensorflow object detection API on this link https://github.com/tensorflow/models/tree/master/research/object_detection
 
-You find the ROS code on The tf_object_detection_node.py file, it is responsible for sending the detected regions of the objects to our robot that will use that regions to execute grasps towards those regions. 
+You find the ROS code on The tf_object_detection_node.py file, it is responsible for sending the detected regions of the objects to our robot that will use those regions to execute grasps.
 
 
 ## Running the Node
@@ -34,8 +32,8 @@ Parameters:
 * `/object_detection/confidence_level`: confidence level(class score), any object with a level below this will not be used. Default value = 0.7 (70%)
 
 
-The inference graph used in this demonstation is taken from our trained model that we applied on some specific objects that we advice not to take in your model. Better to train it on your own data. We describe the process of data collection in the paper. 
+The inference graph used in this demonstration is taken from our trained model that we applied on some specific objects that we advice not to take in your model. Better to train it using your own data. We describe the process of data collection in the paper. 
 
-An easy way without training our same model, is to try one of the ZOO models like(SSD-mobilenet-COCO2018), it has been trained to 90 detect category classes, and can select some objects from them that you want to grasp. The problem with taking this model is that the detector doesn't detect the graping regions, the bounding rectangles in this case bound the whole object, so you want to do some little changes for the ROS code to make it successful with the grasping attemps. 
+An easy way without training our same model, is to try one of the ZOO models like(SSD-mobilenet-COCO2018), it has been trained to detect 90 category classes, and can select some objects from them that you want to grasp. The problem with taking this model is that the detector doesn't detect the best grasping regions. The detected bounding rectangles in this case bound the whole object, so you want to do some little changes for the ROS code to make it successful with the grasping attempts. 
 
 For more details on the ROS algorithm and the object detection model, please reach to our paper. and for any issues with code, kindly feel free to describe it on this link https://github.com/nouaim/uArmswfitpro-objectdetection/issues 
