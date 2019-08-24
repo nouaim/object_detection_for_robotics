@@ -5,7 +5,7 @@ This code works with the uArm swift pro ROS package on this link https://github.
 
 and the Tensorflow object detection API on this link https://github.com/tensorflow/models/tree/master/research/object_detection
 
-You find the ROS code on The tf_object_detection_node.py file, it is responsible for sending the detected regions of the objects to our robot that will use those regions to execute grasps.
+You find the ROS code on The tf_object_detection_node.py file, it is responsible for sending the detected regions of the objects to our robot that will use to execute grasps.
 
 
 ## Running the Node
