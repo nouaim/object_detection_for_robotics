@@ -1,0 +1,3 @@
+object_detection:
+  confidence_level: 0.60
+  path: '/home/usr/ros_package/src/tf_object_detection/src'

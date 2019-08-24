@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>
+  <rosparam command="load" file="$(find tf_object_detection)/config/config.yaml" />  
+  <include file="$(find raspicam_node)/launch/camerav2_1280x960.launch" />
+  <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/usb_cam/image_raw out:=/camera/image/raw" />
+  <node pkg="tf_object_detection" type="tf_object_detection_node.py" name="tf_object_detection_node" output="screen" />
+</launch>
