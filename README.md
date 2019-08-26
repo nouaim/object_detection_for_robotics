@@ -1,6 +1,8 @@
 # ROScode
 You find here the code associated with our research "Multi-object detection for robotic grasping based on Convolutional Neural Networks". 
 
+In this drive link you find a video of a simple demonstation of how our model works https://drive.google.com/open?id=10Siw-KGe3zl1shEmWcpXFI7rzLMSap0D (you notice that the placing action isn't very accuracte compared to the picking action, that's because our model only focus on the detection of the grasping region and doesn't take into consideration the precision in the motion planning)
+
 This code works with the uArm swift pro ROS package on this link https://github.com/uArm-Developer/RosForSwiftAndSwiftPro
 
 and the Tensorflow object detection API on this link https://github.com/tensorflow/models/tree/master/research/object_detection
