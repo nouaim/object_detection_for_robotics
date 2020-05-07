@@ -153,43 +153,9 @@ class MoveGroupPythonIntefaceTutorial(object):
     self.group_names = group_names
 
 
-  def go_to_joint_state(self):
-    # Copy class variables to local variables to make the web tutorials more clear.
-    # In practice, you should use the class variables directly unless you have a good
-    # reason not to.
-    move_group = self.move_group
+  
 
-    ## BEGIN_SUB_TUTORIAL plan_to_joint_state
-    ##
-    ## Planning to a Joint Goal
-    ## ^^^^^^^^^^^^^^^^^^^^^^^^
-    ## The Panda's zero configuration is at a `singularity <https://www.quora.com/Robotics-What-is-meant-by-kinematic-singularity>`_ so the first
-    ## thing we want to do is move it to a slightly better configuration.
-    # We can get the joint values from the group and adjust some of the values:
-    joint_goal = move_group.get_current_joint_values()
-    joint_goal[0] = 0
-    joint_goal[1] = 0
-    #joint_goal[2] = 0.3490659
-    joint_goal[3] = 0
-    #joint_goal[4] = 0.3490659
-    
-    # The go command can be called with joint values, poses, or without any
-    # parameters if you have already set the pose or joint target for the group
-    move_group.go(joint_goal, wait=True)
-
-    # Calling ``stop()`` ensures that there is no residual movement
-    move_group.stop()
-
-    ## END_SUB_TUTORIAL
-
-    # For testing:
-    current_joints = move_group.get_current_joint_values()
-    return all_close(joint_goal, current_joints, 0.01)
-
-
-
-
-  """def go_to_pose_goal(self):
+  def go_to_pose_goal(self):
     # Copy class variables to local variables to make the web tutorials more clear.
     # In practice, you should use the class variables directly unless you have a good
     # reason not to.
@@ -230,7 +196,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     # we use the class variable rather than the copied state variable
     current_pose = self.move_group.get_current_pose().pose
     return all_close(pose_goal, current_pose, 0.01)
-   """
+   
     
     
 
@@ -247,7 +213,7 @@ def main(args):
 
     print ("============ Press `Enter` to execute a movement using a joint state goal ...")
     raw_input()
-    tutorial.go_to_joint_state()
+    tutorial.go_to_pose_goal()
     print ("============ Python demo complete!")
   except rospy.ROSInterruptException:
     return
