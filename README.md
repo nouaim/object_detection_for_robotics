@@ -115,6 +115,6 @@ To get additional information, check our paper on [here][2] (The objects are dif
 
 
 [1]: https://github.com/tensorflow/models/tree/master/research/object_detection
-[2]: irphouse.com/ijert19/ijertv12n11_08.pdf
+[2]: http://irphouse.com/ijert19/ijertv12n11_08.pdf
 [3]: https://www.intelrealsense.com/depth-camera-d435/
 [4]: https://moveit.ros.org/
