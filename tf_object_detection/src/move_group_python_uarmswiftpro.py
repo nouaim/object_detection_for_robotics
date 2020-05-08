@@ -32,6 +32,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
+# Author: Acorn Pooley, Mike Lautman
 
 ## BEGIN_SUB_TUTORIAL imports
 ##
@@ -50,14 +51,15 @@ from math import pi
 from std_msgs.msg import String 
 from moveit_commander.conversions import pose_to_list
 ## END_SUB_TUTORIAL
+from tf_object_detection.msg import detection_results
 
 import cv2
 from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
-#from image_pub_sub_class import*
-#import tf_object_detection_node
 
+from random import seed
+from random import random
 
 def all_close(goal, actual, tolerance):
   """
@@ -86,12 +88,28 @@ class MoveGroupPythonIntefaceTutorial(object):
   """MoveGroupPythonIntefaceTutorial"""
   def __init__(self):
     super(MoveGroupPythonIntefaceTutorial, self).__init__()
+    
+
+    #rospy.init_node('MoveGroupPythonIntefaceTutorial', anonymous=True)
+    
+    
+    
+    moveit_commander.roscpp_initialize(sys.argv)
+
+    #self.subb= rospy.Subscriber("/tf_object_detection_node/result", detection_results, self.go_to_joint_state)
+    
+    
+    
+
+    # spin() simply keeps python from exiting until this node is stopped
+    #rospy.spin()
 
     ## BEGIN_SUB_TUTORIAL setup
     ##
     ## First initialize `moveit_commander`_ and a `rospy`_ node:
-    moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node('move_group_python_interface_tutorial', anonymous=True)
+    #self.__result_sub = rospy.Subscriber("/tf_object_detection_node/result", detection_results, self.go_to_joint_state)
+
+    #rospy.init_node('move_group_python_interface_tutorial', anonymous=True)
 
     ## Instantiate a `RobotCommander`_ object. Provides information such as the robot's
     ## kinematic model and the robot's current joint states
@@ -151,9 +169,102 @@ class MoveGroupPythonIntefaceTutorial(object):
     self.planning_frame = planning_frame
     self.eef_link = eef_link
     self.group_names = group_names
+    #rospy.spin()
+    
+  #def callback4(lll):
+  #  rospy.loginfo(lll)
+  #  if(lll.names_detected== ['g']):
+  #      print("okay")
 
+
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # name are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.
+    
+    
 
   
+
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # name are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.  
+   # rospy.Subscriber("/tf_object_detection_node/result", detection_results, callback)
+  def listener(self):
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # name are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.
+    rospy.init_node('listener', anonymous=True)
+    
+    
+    a=rospy.Subscriber("/tf_object_detection_node/result", detection_results, self.go_to_joint_state)
+
+
+    rospy.spin()
+
+  
+
+
+
+ #if (data.names_detected== ['person']):
+
+  def go_to_joint_state(self, data):
+    # Copy class variables to local variables to make the web tutorials more clear.
+    # In practice, you should use the class variables directly unless you have a good
+    # reason not to.
+    #print("the detected object is", data.names_detected)
+
+    #rospy.loginfo(data)
+    
+    i=0
+    seed(1)
+    #print("the detected object is", data.names_detected)
+    
+    move_group = self.move_group 
+
+    if(data.names_detected== ['write the class of the object you want to detect']):
+       
+       #ymin,
+       #xmin,
+       #ymax,
+       #xmax,    
+       print("the detected object is", data.names_detected)
+       joint_goal = move_group.get_current_joint_values()
+       #joint_goal[0] = 0.42 - 0.25
+       #joint_goal[1] = 0.33 +0.4
+       joint_goal[2] = 0
+       #joint_goal[0]= (data.rectangles[2] + data.rectangles[0])/2  - 0.25
+       #joint_goal[1]= (data.rectangles[3] + data.rectangles[1])/2 
+       #joint_goal[0] = 0
+       joint_goal[1] = 0.3
+       #joint_goal[2] = 0
+
+
+       #joint_goal[3] = 0.17
+       #joint_goal[4] = 0.3490659 
+       # The go command can be called with joint values, poses, or without any
+       # parameters if you have already set the pose or joint target for the group
+       move_group.go(joint_goal, wait=True)
+       # Calling ``stop()`` ensures that there is no residual movement
+       #move_group.stop()
+       ## END_SUB_TUTORIAL
+       # For testing:
+       current_joints = move_group.get_current_joint_values()     
+       rospy.sleep(20)
+        
+
+    return all_close(joint_goal, current_joints, 0.01)      
+        
+        
+       
+      
+
+"""
 
   def go_to_pose_goal(self):
     # Copy class variables to local variables to make the web tutorials more clear.
@@ -196,25 +307,33 @@ class MoveGroupPythonIntefaceTutorial(object):
     # we use the class variable rather than the copied state variable
     current_pose = self.move_group.get_current_pose().pose
     return all_close(pose_goal, current_pose, 0.01)
-   
-    
+
+"""    
     
 
 def main(args):
-   
+  
+
   try:
     print ("----------------------------------------------------------")
+    print ("Welcome to the MoveIt MoveGroup Python Interface Tutorial")
     print ("----------------------------------------------------------")
     print ("Press Ctrl-D to exit at any time")
     print ("")
     print ("============ Press `Enter` to begin the tutorial by setting up the moveit_commander ...")
     raw_input()
-    tutorial = MoveGroupPythonIntefaceTutorial()
-
+    #obj = MoveGroupPythonIntefaceTutorial()
+    #obj.listener()
+    print ("Wait for the class of the object")
     print ("============ Press `Enter` to execute a movement using a joint state goal ...")
-    raw_input()
-    tutorial.go_to_pose_goal()
-    print ("============ Python demo complete!")
+    #raw_input()
+    tutorial = MoveGroupPythonIntefaceTutorial()
+    tutorial.listener()
+    #tutorial.listener2()
+    
+    #tutorial.listener()
+    #tutorial.go_to_joint_state()
+    print ("============ Python tutorial demo complete!")
   except rospy.ROSInterruptException:
     return
   except KeyboardInterrupt:
@@ -222,6 +341,7 @@ def main(args):
      
 if __name__ == '__main__':
     main(sys.argv)
+    
 
    #print "============ Press `Enter` to execute a movement using a pose goal ..."
     #raw_input()
