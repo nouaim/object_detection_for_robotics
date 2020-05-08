@@ -6,20 +6,28 @@
 import numpy as np
 import tensorflow as tf
 from collections import defaultdict
+import rospy
+
 from io import StringIO
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 from PIL import Image
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+from sensor_msgs.msg import Image, RegionOfInterest
+from tf_object_detection.msg import detection_results, rectangles_results
+from std_msgs.msg import Float32MultiArray
+
+
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '12'
 class ObjectDetection:
 
     def __init__(self, path, confidence): # path will be to the models/research/object_detection directory
         # Pre-trained model name
-        MODEL_NAME = 'ssd_mobilenet_v1_coco_2018_01_28'
-        PATH_TO_FROZEN_GRAPH = path + '/' + MODEL_NAME + '/frozen_inference_graph.pb'
-        PATH_TO_LABELS = path + '/data/' + 'mscoco_label_map.pbtxt'
+        #MODEL_NAME = 'ssd_mobilenet_v1_coco_2018_01_28'
+        PATH_TO_FROZEN_GRAPH = path +'/inference_graph'+ '/frozen_inference_graph.pb'
+        PATH_TO_LABELS = path + '/data/' + 'labelmap.pbtxt'
 
         # Load a frozen Tensorflow model into memory
         self.__detection_graph = tf.Graph()
@@ -40,6 +48,13 @@ class ObjectDetection:
 
         # Store the confidence level
         self.__confidence = confidence
+
+        #self.__pub = rospy.Publisher("/tf_object_detection_node/bresult", rectangles_results, queue_size=10)
+
+        self.__result_pub = rospy.Publisher("/tf_object_detection_node/result2", detection_results, queue_size=10)
+
+        
+
 
     def run_inference_for_single_image(self, image):
         with self.__detection_graph.as_default():
@@ -107,11 +122,64 @@ class ObjectDetection:
 
         # Return a list of object names detected
         detected_list = []
+        recs=[[0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0],
+              [0,0,0,0]]
+
+        tab= [0,0,0,0,0,0,0,0,0,0,0,0]
+        tab2= [0,0,0,0,0,0,0,0,0,0,0,0]
+        
+        k=0
+      
         total_detections = output_dict['num_detections']
+        print('total_detections= ',total_detections)
+        result = detection_results()
+
+        result.number_of_detections=total_detections
+        
+        o = output_dict['detection_boxes']
+
         if total_detections > 0:
             for detection in range(0, total_detections):
                 if output_dict['detection_scores'][detection] > self.__confidence:
                     category = output_dict['detection_classes'][detection]
                     detected_list.insert(0,self.__category_index[category]['name'])
+                    result.names_detected = detected_list
+                    
 
-        return detected_list
+            for detection in range(0, total_detections):
+                for detectionj in range(0, 4):
+                   if output_dict['detection_scores'][detection] > self.__confidence:
+                       recs[detection][detectionj] = o [detection][detectionj]
+                       
+
+        #    for detection in range(0, total_detections):
+        #        for detectionj in range(0, 4):
+        #           if output_dict['detection_scores'][detection] > self.__confidence:
+        #              tab[k]= recs[detection][detectionj]
+        #              result.rectangles = tab
+        #              k+=1                                         
+                
+                       
+            print(detected_list)
+            print(recs)           
+            #print(boxes_results)
+
+            #self.__pub.publish(boxes_results)
+            
+        #    self.__result_pub.publish(result)     
+                          
+             
+
+        return tab2
+   
+        
