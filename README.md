@@ -61,7 +61,8 @@ Parameters:
 The diagram in Figure .3 captures what this node contains.
 
 
-<img  src= "images/firstnode.png"  width="500" height= "350" >
+<img  src= "images/firstnode.png"  width="450" height= "300" >
+
 Figure 3. Object detection node.
 
 
@@ -81,7 +82,7 @@ You can run it with "rosrun tf_object_detection motion.py".
 * `tf_object_detection/result` topic subscribes to the list of the names of the classes of each detected object, bounding rectangles coordinates, and the number of the detections.
 
 
-<img  src= "images/2ndnode.png"  width="383" height= "189" >
+<img  src= "images/2ndnode.png"  width="320" height= "125" >
 Figure 4. Detection subscriber on the 2nd node.
 
 Other subcribers are associated with [Moveit framework][4].
@@ -95,15 +96,9 @@ This must be included on the second node. Why haven't I provided it on the code 
 
 Because simply all depends on the placement of the camera for the calibration. The camera coordinates that the camera gives should be converted to the real world coordinates that the robot uses for inverse kinematics. 
 
-<img  src= "images/actions_execution.png"  width="738" height= "577" > 
- Figure 5. Actions execution algorthim.
-
-
-
-
-
-
-
+<img  src= "images/actions_execution.png"  width="638" height= "477" >
+ 
+Figure 5. Actions execution algorthim.
 
 **Important note:** this work is meant to demonstrate that object detection can be used for robotic arms, so the ROS code on this repository can basically be used for any arm its inverse kinematics is developed with ROS. For this purpose, please consider that ROS code of the uArm swift pro that is provided by its company https://github.com/uArm-Developer/RosForSwiftAndSwiftPro is not sufficient —⁠——⁠ it only has forward kinematics, but inverse kinematics was not done there. So if you want a robot that its inverse kinematics is done on ROS, ***you have to avoid the uArm swift pro and look for something else***. On the other hand, uArm swift pro has inverse kinematics done on this Python sdk https://github.com/uArm-Developer/uArm-Python-SDK —⁠——⁠ which is based on _the Arduino only(no ROS)._ 
 
