@@ -1,1 +1,0 @@
-float [] bounding_boxes
